@@ -20,6 +20,9 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 
+	/*
+	* Using CommandLineRunner to create ADMIN user upon booting the project
+	*/
 	@Bean
 	CommandLineRunner commandLineRunner(UserRepository repository) {
 		return args -> repository.save(

@@ -5,31 +5,36 @@ import com.ashutosh.carmanagementapi.model.Car;
 import com.ashutosh.carmanagementapi.repository.CarRepository;
 import com.ashutosh.carmanagementapi.requests.CreateCarRequest;
 import com.ashutosh.carmanagementapi.requests.UpdateCarRequest;
-import com.ashutosh.carmanagementapi.responses.CreateCarResponse;
-import com.ashutosh.carmanagementapi.responses.DeleteCarResponse;
-import com.ashutosh.carmanagementapi.responses.GetCarResponse;
-import com.ashutosh.carmanagementapi.responses.UpdateCarResponse;
+import com.ashutosh.carmanagementapi.responses.*;
 import com.ashutosh.carmanagementapi.service.CarService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Objects;
 
+/*
+ * Service Interface Implementation that provides Car related logic implementations
+ */
 @Service
 @RequiredArgsConstructor
 public class CarServiceImpl implements CarService {
 
     private final CarRepository repository;
-
     private final static Logger LOGGER = LoggerFactory.getLogger(CarServiceImpl.class);
 
+    /*
+     * Method to add a Car to DB
+     */
     @Override
     public CreateCarResponse createCar(CreateCarRequest request) {
         CreateCarResponse response = new CreateCarResponse();
+        //checking if the request is up to the requirement or not
         if (Objects.nonNull(request) && Objects.nonNull(request.getBrand()) && Objects.nonNull(request.getModel())) {
             // Empty brand and model passed
             if (StringUtils.isEmpty(request.getBrand()) && StringUtils.isEmpty(request.getModel())) {
@@ -45,10 +50,12 @@ public class CarServiceImpl implements CarService {
                     .isManual(request.isManual())
                     .build();
             try {
+                // trying to save car entity to DB
                 LOGGER.info("Trying to save Car into DB {}", car.toString());
                 repository.save(car);
                 response.setMessage(String.format("Car saved with model %s and brand %s.", request.getModel(), request.getBrand()));
             } catch (Exception e) {
+                // if a car already exists with same model return this response
                 LOGGER.error("Exception encountered {}", e.getLocalizedMessage());
                 response.setMessage("Duplicate model saving isn't allowed");
             }
@@ -59,14 +66,19 @@ public class CarServiceImpl implements CarService {
         return response;
     }
 
+    /*
+     * Method to fetch a Car from DB
+     */
     @Override
     public GetCarResponse getCar(Long id) {
         GetCarResponse response = new GetCarResponse();
         var car = repository.findById(id);
+        // check if car is present in DB or not
         if (!car.isPresent()) {
             response.setMessage(String.format("No Car was found with this id %d", id));
             return response;
         }
+        // if car is found in DB
         response.setCar(
                 CarDTO.builder()
                         .brand(car.get().getBrand())
@@ -79,16 +91,9 @@ public class CarServiceImpl implements CarService {
         return response;
     }
 
-    @Override
-    public List<CarDTO> getAllCars() {
-        var cars = repository.findAll();
-        return cars.stream()
-                .map(
-                        car -> new CarDTO(car.getBrand(), car.getModel(), car.is4wd(), car.isManual())
-                ).
-                toList();
-    }
-
+    /*
+     * Method to delete a Car from DB
+     */
     @Override
     public DeleteCarResponse deleteCar(Long id) {
         DeleteCarResponse response = new DeleteCarResponse();
@@ -102,6 +107,9 @@ public class CarServiceImpl implements CarService {
         return response;
     }
 
+    /*
+     * Method to update Car and save it into DB
+     */
     @Override
     public UpdateCarResponse updateCar(Long id, UpdateCarRequest request) {
         UpdateCarResponse response = new UpdateCarResponse();
@@ -119,5 +127,19 @@ public class CarServiceImpl implements CarService {
         repository.save(car.get());
         response.setMessage(String.format("Updated car with id %d", id));
         return response;
+    }
+
+    @Override
+    public PaginatedResponse fetchAllCars(String name, Pageable pageable) {
+        Page<Car> cars = repository.findAllByBrandContains(name, pageable);
+        List<CarDTO> list = cars.stream()
+                .map(
+                        car -> new CarDTO(car.getBrand(), car.getModel(), car.is4wd(), car.isManual())
+                ).
+                toList();
+        return PaginatedResponse.builder()
+                .numberOfItems(cars.getTotalElements()).numberOfPages(cars.getTotalPages())
+                .list(list)
+                .build();
     }
 }

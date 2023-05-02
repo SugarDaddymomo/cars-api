@@ -3,16 +3,13 @@ package com.ashutosh.carmanagementapi.controller;
 import com.ashutosh.carmanagementapi.dto.CarDTO;
 import com.ashutosh.carmanagementapi.requests.CreateCarRequest;
 import com.ashutosh.carmanagementapi.requests.UpdateCarRequest;
-import com.ashutosh.carmanagementapi.responses.CreateCarResponse;
-import com.ashutosh.carmanagementapi.responses.DeleteCarResponse;
-import com.ashutosh.carmanagementapi.responses.GetCarResponse;
-import com.ashutosh.carmanagementapi.responses.UpdateCarResponse;
+import com.ashutosh.carmanagementapi.responses.*;
 import com.ashutosh.carmanagementapi.service.CarService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
-
 import java.util.List;
 
 @RestController
@@ -33,8 +30,8 @@ public class CarController {
     }
 
     @GetMapping("/fetch-cars")
-    public ResponseEntity<List<CarDTO>> getAllCars() {
-        return ResponseEntity.ok(service.getAllCars());
+    public ResponseEntity<PaginatedResponse> getAllCars(@RequestParam("query") String query, Pageable pageable) {
+        return ResponseEntity.ok(service.fetchAllCars(query, pageable));
     }
 
     @DeleteMapping("/delete-car/{id}")
