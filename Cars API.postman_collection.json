@@ -1,0 +1,253 @@
+{
+	"info": {
+		"_postman_id": "925b1a9a-1f26-4ebd-9de2-98c6db9021bc",
+		"name": "Cars API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18079157"
+	},
+	"item": [
+		{
+			"name": "Authenticate a User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"admin@gmail.com\",\r\n    \"password\": \"P@ssword123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/api/v1/auth/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register a User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"ashu@gmail.com\",\r\n    \"password\": \"P@ssword123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/api/v1/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a Car",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc2h1QGdtYWlsLmNvbSIsImlhdCI6MTY4MzAxNDE0NSwiZXhwIjoxNjgzMDE1NTg1fQ.JwSj089Q3wsi7iDFUxkBS9tFCmhYTVoLThQYu-h-YvM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"brand\": \"BMW\",\r\n    \"model\": \"X5\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/api/v1/car-api/add-car",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"v1",
+						"car-api",
+						"add-car"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a Car",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc2h1QGdtYWlsLmNvbSIsImlhdCI6MTY4MzAxNDE0NSwiZXhwIjoxNjgzMDE1NTg1fQ.JwSj089Q3wsi7iDFUxkBS9tFCmhYTVoLThQYu-h-YvM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/api/v1/car-api/fetch-car/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"v1",
+						"car-api",
+						"fetch-car",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch All Cars",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc2h1QGdtYWlsLmNvbSIsImlhdCI6MTY4MzAxNDE0NSwiZXhwIjoxNjgzMDE1NTg1fQ.JwSj089Q3wsi7iDFUxkBS9tFCmhYTVoLThQYu-h-YvM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/api/v1/car-api/fetch-cars",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"v1",
+						"car-api",
+						"fetch-cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Car",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc2h1QGdtYWlsLmNvbSIsImlhdCI6MTY4MzAxNDE0NSwiZXhwIjoxNjgzMDE1NTg1fQ.JwSj089Q3wsi7iDFUxkBS9tFCmhYTVoLThQYu-h-YvM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/api/v1/car-api/delete-car/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"v1",
+						"car-api",
+						"delete-car",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Car",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc2h1QGdtYWlsLmNvbSIsImlhdCI6MTY4MzAxNDE0NSwiZXhwIjoxNjgzMDE1NTg1fQ.JwSj089Q3wsi7iDFUxkBS9tFCmhYTVoLThQYu-h-YvM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"brand\": \"rgwrgwr\",\r\n    \"model\": \"wrghwhgwrghwr\",\r\n    \"is4wd\": true,\r\n    \"isManual\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/api/v1/car-api/update-car/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"v1",
+						"car-api",
+						"update-car",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
