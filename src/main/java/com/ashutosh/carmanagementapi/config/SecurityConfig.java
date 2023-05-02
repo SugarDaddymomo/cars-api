@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .hasAuthority("ADMIN")
                 .requestMatchers("/api/v1/car-api/fetch-car/*", "/api/v1/car-api/fetch-cars")
                 .hasAuthority("USER")
-                .requestMatchers("/api/v1/auth/**")
+                .requestMatchers("/api/v1/auth/**", "/swagger-ui/**", "/v3/api-docs/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

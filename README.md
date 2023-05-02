@@ -11,3 +11,4 @@ To run this project locally you need to follow few steps:
 * Import the postman collection provided in the repo into your Postman Desktop App
 * Collection will have all the required endpoints with request body and all
 * IMPORTANT: **admin user is created by default as soon as you run the project**
+* To see Swagger API docs visit: ```http://localhost:9090/swagger-ui/```
