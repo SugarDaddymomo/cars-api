@@ -7,11 +7,15 @@ import com.ashutosh.carmanagementapi.requests.ReclaimRequest;
 import com.ashutosh.carmanagementapi.responses.ReclaimResponse;
 import com.ashutosh.carmanagementapi.service.ReclaimNumberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
+import org.springframework.web.client.RestTemplate;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Objects;
 
 @Service
@@ -19,6 +23,9 @@ import java.util.Objects;
 public class ReclaimNumberServiceImpl implements ReclaimNumberService {
 
     private final ReclaimNumberRepository repository;
+
+    @Value("${project.api.url}")
+    private String apiURL;
 
     @Override
     public ResponseEntity<ReclaimResponse> deleteNumber(ReclaimRequest request) {
