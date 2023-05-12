@@ -1,7 +1,9 @@
 package com.ashutosh.carmanagementapi;
 
+import com.ashutosh.carmanagementapi.model.ReclaimNumber;
 import com.ashutosh.carmanagementapi.model.Role;
 import com.ashutosh.carmanagementapi.model.User;
+import com.ashutosh.carmanagementapi.repository.ReclaimNumberRepository;
 import com.ashutosh.carmanagementapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -28,6 +30,17 @@ public class Application {
 		return args -> repository.save(
 				new User("admin@gmail.com", passwordEncoder.encode("P@ssword123"), Role.ADMIN)
 		);
+	}
+
+	@Bean
+	CommandLineRunner commandLineRunner2(ReclaimNumberRepository repository) {
+		ReclaimNumber number = new ReclaimNumber();
+		number.setDid("123");
+		number.setStatus(ReclaimStatus.SUCCESS);
+		number.setStatusCode("200");
+		number.setStatusDesc("OK");
+		number.setProviderName("DIDWW");
+		return args -> repository.save(number);
 	}
 
 }

@@ -25,7 +25,7 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/car-api/add-car", "/api/v1/car-api/delete-car/*", "/api/v1/car-api/update-car/*")
+                .requestMatchers("/api/v1/car-api/add-car", "/api/v1/car-api/delete-car/*", "/api/v1/car-api/update-car/*", "/api/sonetel/reclaim/**")
                 .hasAuthority("ADMIN")
                 .requestMatchers("/api/v1/car-api/fetch-car/*", "/api/v1/car-api/fetch-cars")
                 .hasAuthority("USER")
